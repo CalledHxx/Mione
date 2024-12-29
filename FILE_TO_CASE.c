@@ -506,7 +506,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
             case 1: //字串
 
                 //printf("%d *[CASE ADDED]* \"%d\"",cIndex,c);
-
                 CASESize++;
                 CASE = realloc(CASE, CASESize);
                 CASE[CASESize - 1] = c;
