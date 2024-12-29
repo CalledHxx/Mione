@@ -463,7 +463,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                         CASE[CASESize - 1] = c;
                     }
                 }
-
                 break;
             case 12:
                 if (superCharSize) //防止上方的結構有加了
