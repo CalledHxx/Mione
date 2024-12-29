@@ -521,7 +521,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
         if (ZEROTILSC) ThislastSuperChar=0; //在Loop內 別清除 ZEROTILSC
         // ThislastSuperChar = 0;1
 
-
         if (c == EOF) break;
     }
     while (1);
