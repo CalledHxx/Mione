@@ -425,7 +425,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                     CASESize++;
                     CASE = realloc(CASE, CASESize);
                     CASE[CASESize - 1] = c;
-
                 }
 
                 break;
