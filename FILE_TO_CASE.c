@@ -494,7 +494,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                 }
                 break;
             }
-
         }
 
         if (superCharSize || ThislastSuperChar)
