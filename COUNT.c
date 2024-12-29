@@ -300,7 +300,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             printf("b aaa %d\n",Pack[i - 2].Val.NPNumber);
                             printf("a of %d\n",Target2.ValueType);
 
-                            //TODO 把宏值拿掉
 
 
                             if (!(Target1.ValueType == 2 || Target1.ValueType == 3)){ ErrCall("Type Error","MG0011111","");}
