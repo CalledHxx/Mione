@@ -4,4 +4,3 @@
 
 
 extern  CaseObj* FCO(FILE* F,int *CASESIZE);
-
