@@ -447,7 +447,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                             .ObjType = 10,
                             .ObjName = CASE,
                         };
-
                         CASE = NULL;
                         CASE = malloc(0);
                         CASESize = 0;
