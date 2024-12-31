@@ -311,7 +311,7 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                         if (c == '*') inLockinType = 6;
 
                         CASESize--;
-                        CASE[CASESize] = NULL;
+                        CASE[CASESize] = (char)0;
                         CASE = realloc(CASE, CASESize);
                     }
 

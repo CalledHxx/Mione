@@ -35,14 +35,14 @@ SymbolsCaseObj Symbols[] =
     (SymbolsCaseObj){
         .Name = "(",
         .SymbolType = 0,
-        .xIndex = 0,
+        .xIndex = 0, //這邊的設定有點無效 指示標住她的確與階級0同樣層級執行
         .CurNumber = 0
     },
 
     (SymbolsCaseObj){
         .Name = ")",
         .SymbolType = 0,
-        .xIndex = 0,
+        .xIndex = 0, //這邊的設定有點無效 指示標住她的確與階級0同樣層級執行
         .CurNumber = 0
     },
 
