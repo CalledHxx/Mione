@@ -131,7 +131,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                                 .Val = V.Value[index]
                                             };
 
-                                            printf("VVV : %d\n",V.Value[index].NPNumber);
                                         }
 
                                     }else
@@ -160,7 +159,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
                                     i = FirstBracketIndex - 1;
 
-                                    printf("size %d %d\n",NewPackSize,i);
 
 
 
@@ -750,7 +748,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
             CalculateLevel++;
             i = -1;// ...困擾了我好久
             if (CalculateLevel > 3) { break; }
-            printf("re\n");
 
         }
     }
@@ -761,7 +758,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
     for (int i = 0; i < PackSize; i++)
     {
-        printf("Index : %d TYPE : %d %s %Lf\n",i,Pack[i].ObjType,Pack[i].Symbol.Name,(long double)Pack[i].Val.PNumber);
 
         if ( Pack[i].ObjType == 5)
         {

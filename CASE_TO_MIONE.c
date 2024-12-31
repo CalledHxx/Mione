@@ -71,7 +71,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
 
-           printf("`%s`\n",CASES[i].ObjName);
 
 
 
