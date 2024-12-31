@@ -33,7 +33,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
     int ChildCount = 0; //子項數量
 
-    printf("ddd %d\n",CASESIZE);
 
 
 
@@ -72,7 +71,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
 
-
+           printf("`%s`\n",CASES[i].ObjName);
 
 
 
@@ -170,7 +169,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                        .Index = MIONESIZE
                    };
 
-                   printf("area start at %d , size %d \n",eArea.Index,AreaSize);
 
 
                    ValueObj Value = (ValueObj){
@@ -314,6 +312,35 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         LastPaired = Paired;
        }
     }
+
+
+    for (int i = 1; i < MIONESIZE; i++)
+    {
+        switch (MIONE[i].ObjType)
+        {
+        case 1:
+            printf("`%s`\n",MIONE[i].Head.Name);
+
+            break;
+        case 2:
+            printf("`%s`\n",MIONE[i].Prompt.Name);
+
+            break;
+        case 3:
+            printf("`%s`\n",MIONE[i].Symbol.Name);
+
+            break;
+        case 4:
+            printf("`%s`\n",MIONE[i].Var.Name);
+
+            break;
+        case 5:
+            printf("`%d`\n",MIONE[i].Val.NPNumber);
+
+            break;
+        }
+    }
+
     (*SIZE) = (MIONESIZE);
     return MIONE;
 }

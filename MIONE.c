@@ -12,11 +12,10 @@
 
 
 
-ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize)
+ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj* Request, const int RequestSize)
 {
     HeadGetObj HeadGet = GetHeads();
     
-    printf("F SIZE : %d\n", ObjsSize);
 
     MioneObj Head = (MioneObj) {
         .ObjType = 0
@@ -137,7 +136,6 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
     HeadGetObj HeadGet = GetHeads();
 
     // system("clear");
-    printf("SIZE : %d\n", ObjsSize);
 
     MioneObj Head = (MioneObj) {
         .ObjType = 0

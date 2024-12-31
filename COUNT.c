@@ -2,6 +2,7 @@
 // Created by calle on 24-11-3.
 //
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +21,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
     int IfBrackets = 0; // 0 = 0 1 = only ( 2 = ()
     int PairsOfBrackets = 0;
 
+
     MioneObj* inBracket = malloc(0);
     int inBracketSize = 0;
 
@@ -29,6 +31,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
     for(int i = 0; i < PackSize; i++)
     {
+
         int PastCost = 0;//符號所前扣之值
 
         if (Pack[i].ObjType == 3) // Symbol
@@ -39,6 +42,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
                 FirstBracketIndex = i;
                 IfBrackets = 1;
+
             }
             else if (strcmp(Pack[i].Symbol.Name, ")") == 0)
             {
@@ -48,42 +52,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                     PairsOfBrackets++;
                     IfBrackets = 0;
 
+                    int FunctionCalled = 0;
 
                     CountObj ChildCount = COUNT(inBracket, inBracketSize);
-
-                    MioneObj* NewPack = malloc(0);
-                    int NewPackSize = 0;
-
-                    for (int index = 0; index < FirstBracketIndex; index++)
-                    {
-                        NewPackSize++;
-                        NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
-                        NewPack[NewPackSize - 1] = Pack[index];
-                    }
-
-                    for (int index = 0; index < ChildCount.ValueSize; index++)
-                    {
-                        NewPackSize++;
-                        NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
-                        NewPack[NewPackSize - 1] = (MioneObj){
-                            .ObjType = 5,
-                            .Val = ChildCount.Value[index]
-                        };
-                    }
-
-                    for (int index = i + 1; index < PackSize; index++)
-                    {
-                        NewPackSize++;
-                        NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
-                        NewPack[NewPackSize - 1] = Pack[index];
-                    }
-
-                    Pack = NewPack;
-                    PackSize = NewPackSize;
-
-                    i = FirstBracketIndex;
-
-
 
                     if (FirstBracketIndex > 0)
                     {
@@ -124,16 +95,24 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
                                 if (Pack[FirstBracketIndex - 1].Val.ValueType == 4)
                                 {
+
+
+
+
                                     int ButterIndex = WorkOnMioIndex;
                                     WorkOnMioIndex = Pack[FirstBracketIndex - 1].Val.Area.Index;
-                                    ValueReturnObj V = Function( Pack[FirstBracketIndex - 1].Val.Area.Area, Pack[FirstBracketIndex - 1].Val.Area.Size);
+                                    ValueReturnObj V = Function(
+                                        Pack[FirstBracketIndex - 1].Val.Area.Area,
+                                        Pack[FirstBracketIndex - 1].Val.Area.Size,
+                                        ChildCount.Value,
+                                        ChildCount.ValueSize
+                                        );
 
                                     MioneObj* NewPack = malloc(0);
                                     int NewPackSize = 0;
 
                                     for (int index = 0; index < FirstBracketIndex-1; index++)
                                     {
-                                        printf("added 1\n");
                                         NewPackSize++;
                                         NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
                                         NewPack[NewPackSize - 1] = Pack[index];
@@ -151,26 +130,24 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                                 .ObjType = 5,
                                                 .Val = V.Value[index]
                                             };
+
+                                            printf("VVV : %d\n",V.Value[index].NPNumber);
                                         }
 
-                                    } else
+                                    }else
                                     {
                                         NewPackSize++;
                                         NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
                                         NewPack[NewPackSize - 1] = (MioneObj){
                                             .ObjType = 5,
                                             .Val = (ValueObj){
-                                                .ValueType = 2,
-                                                .NPNumber = 0,
-                                            }
+                                            .ValueType = 2,.NPNumber = 0}
                                         };
-
                                     }
 
 
-                                    for (int index = i ; index < PackSize; index++)
+                                    for (int index = i+1 ; index < PackSize; index++)
                                     {
-                                        printf("added 2\n");
 
                                         NewPackSize++;
                                         NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
@@ -181,9 +158,16 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     Pack = NewPack;
 
 
+                                    i = FirstBracketIndex - 1;
+
+                                    printf("size %d %d\n",NewPackSize,i);
+
+
+
 
                                     //todo function call
                                     WorkOnMioIndex = ButterIndex;
+                                    FunctionCalled = 1;
                                 }
                                 else
                                 {
@@ -196,7 +180,43 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             }
                         }
                     }
+
+                    if (!FunctionCalled)
+                    {
+                        MioneObj* NewPack = malloc(0);
+                        int NewPackSize = 0;
+
+                        for (int index = 0; index < FirstBracketIndex; index++)
+                        {
+                            NewPackSize++;
+                            NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
+                            NewPack[NewPackSize - 1] = Pack[index];
+                        }
+
+                        for (int index = 0; index < ChildCount.ValueSize; index++)
+                        {
+                            NewPackSize++;
+                            NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
+                            NewPack[NewPackSize - 1] = (MioneObj){
+                                .ObjType = 5,
+                                .Val = ChildCount.Value[index]
+                            };
+                        }
+
+                        for (int index = i + 1; index < PackSize; index++)
+                        {
+                            NewPackSize++;
+                            NewPack = realloc(NewPack, NewPackSize * sizeof(MioneObj));
+                            NewPack[NewPackSize - 1] = Pack[index];
+                        }
+
+                        Pack = NewPack;
+                        PackSize = NewPackSize;
+
+                        i = FirstBracketIndex -1;
+                    }
                 }
+
             }
             else
             {
@@ -296,9 +316,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
                             if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
 
-                            printf("a of %d\n",Target1.ValueType);
-                            printf("b aaa %d\n",Pack[i - 2].Val.NPNumber);
-                            printf("a of %d\n",Target2.ValueType);
 
 
 
@@ -522,6 +539,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                         // -1
                         ValueObj Target;
 
+
+
                         if (Pack[i].ObjType == 4) Target = Pack[i].Var.V;
                         if (Pack[i].ObjType == 5) Target = Pack[i].Val;
 
@@ -711,7 +730,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                 PackSize = NewPackSize;
                 Pack = NewPack;
 
-                i = ToIndex;
+                i = ToIndex-1;
             }
         }
 
@@ -730,9 +749,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
         {
             CalculateLevel++;
             i = -1;// ...困擾了我好久
-
-
             if (CalculateLevel > 3) { break; }
+            printf("re\n");
+
         }
     }
 
@@ -742,14 +761,18 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
     for (int i = 0; i < PackSize; i++)
     {
-       if ( Pack[i].ObjType == 5)
-       {
-           VPackSize ++;
-           VPack = realloc(VPack, sizeof(MioneObj) * (VPackSize));
-           VPack[VPackSize-1] = Pack[i].Val;
-           printf("d %Lf\n",(long double)Pack[i].Val.PNumber);
-       }
+        printf("Index : %d TYPE : %d %s %Lf\n",i,Pack[i].ObjType,Pack[i].Symbol.Name,(long double)Pack[i].Val.PNumber);
+
+        if ( Pack[i].ObjType == 5)
+        {
+            VPackSize ++;
+            VPack = realloc(VPack, sizeof(MioneObj) * (VPackSize));
+            VPack[VPackSize-1] = Pack[i].Val;
+            printf("d %Lf\n",(long double)Pack[i].Val.PNumber);
+        }
+
     }
+
 
     CountObj Returns = (CountObj){
         .Value = VPack,

@@ -285,9 +285,11 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                 }
                 case 5:
                     if (c == '\n') inLockinType = 0;
+
                     break;
                 case 6:
                     if (LastCharType == CharType)  if (LastChar == '*' || c == '/')inLockinType = 0;
+
                     break;
             }
             break;
@@ -307,6 +309,10 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                     {
                         if (c == '/') inLockinType = 5;
                         if (c == '*') inLockinType = 6;
+
+                        CASESize--;
+                        CASE[CASESize] = NULL;
+                        CASE = realloc(CASE, CASESize);
                     }
 
                 }

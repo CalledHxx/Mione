@@ -18,7 +18,6 @@ void ErrCall(char*Reason,char*ErrCode,char*Tip){
     int Line = 0;
     for (int i = 0; i < MioRowsEndSize; i++)
     {
-        printf("%d %d\n",MioRowsEnd[i],WorkOnMioIndex);
 
         if (MioRowsEnd[i] < WorkOnMioIndex)
         {}else{
@@ -27,7 +26,6 @@ void ErrCall(char*Reason,char*ErrCode,char*Tip){
         }
     }
 
-    printf("omg %d\n",WorkOnMioIndex);
 
     printf("\033[1;37;45m" " # MIONE FAILED :( \033[1;35;43m %s " "\033[0m" "\n",ErrCode);
     printf("    \033[1;37;41m" " $ REASON  " "\033[1;37;46m" " %s " "\033[0m" "\n",Reason);
