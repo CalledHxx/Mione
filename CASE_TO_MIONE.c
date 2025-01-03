@@ -22,7 +22,7 @@ char* Prompts[] =
 
 
 MioneObj *CMO(CaseObj*CASES,int CASESIZE,
-    int* *ROWS, int * ROWSSIZE,int * SIZE)
+    int * SIZE,int LineADD,int ColumnADD)
 {
 
     HeadGetObj HeadGet = GetHeads();
@@ -51,6 +51,9 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
     CaseObj* Area = malloc(0);
     int AreaSize = 0;
 
+    int Line = 0+LineADD;
+    int Column = 0+ColumnADD;
+
 
     for (int i = 0; i <CASESIZE; i++)
     {
@@ -59,15 +62,11 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
        {
             int Paired =0; //Head Symbol Prompt Variable Value
 
-           if (ROWS)
+           if (CASES[i].ObjType == 13 || CASESIZE-1 == i)
            {
-               if (CASES[i].ObjType == 13 || CASESIZE-1 == i)
-               {
-                   (*ROWSSIZE)++;
-                   (*ROWS) = realloc(*ROWS,( (*ROWSSIZE))*sizeof(int));
-                   (*ROWS)[ (*ROWSSIZE)-1] = MIONESIZE+1;
-               }
-           }
+               Line++;
+               Column = 0;
+           };
 
 
 
@@ -82,11 +81,15 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                 .Name = CASES[i].ObjName,
             };
 
+             Column++;
+
             (MIONESIZE)++;
              (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
              (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType= 1,
-                .Head = Head
+                .Head = Head,
+                 .Line = Line,
+                 .Column = Column
             };
 
             Paired = 1;
@@ -99,12 +102,14 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
             PromptObj Prompt = (PromptObj){
                 .Name = CASES[i].ObjName,
             };
-
+             Column++;
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
             (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType= 2,
-                .Prompt = Prompt
+                .Prompt = Prompt,
+                 .Line = Line,
+                .Column = Column
             };
             Paired = 2;
 
@@ -116,17 +121,20 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         {
 
 
-
             SymbolObj Symbol = (SymbolObj){
                 .Name = CASES[i].ObjName,
                 .SymbolType = SymbolGet.a[Ci].SymbolType,
+                .CurNumber = SymbolGet.a[Ci].CurNumber,
             };
+             Column++;
 
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
             (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType= 3,
                 .Symbol = Symbol
+                ,.Line = Line,
+                .Column = Column
             };
             Paired = 3;
 
@@ -138,12 +146,15 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
             Paired = 5;
             ValueObj Value = (ValueObj){.ValueType = 1, .String = CASES[i].ObjName};
+             Column++;
 
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
             (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType= 5,
-                .Val = Value
+                .Val = Value,
+                .Line = Line,
+                .Column = Column
             };
 
         }
@@ -160,12 +171,13 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    Paired = 5;
 
                    int MioObjSize = 0;
-                   MioneObj * MioObj = CMO(Area,AreaSize,NULL,NULL,&MioObjSize);
+
+                   MioneObj * MioObj = CMO(Area,AreaSize,&MioObjSize,MIONE[MIONESIZE-1].Line,MIONE[MIONESIZE-1].Column);
 
                    AreaObj eArea = (AreaObj){
                        .Area =MioObj,
                        .Size = MioObjSize,
-                       .Index = MIONESIZE
+                       .Index = MIONESIZE,
                    };
 
 
@@ -176,12 +188,15 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    };
 
 
+                   Column++;
 
                    (MIONESIZE)++ ;
                    (MIONE) = (MioneObj*)realloc(MIONE, (MIONESIZE)*sizeof(MioneObj));
                    (MIONE)[(MIONESIZE)-1] = (MioneObj){
                        .ObjType = 5,
                        .Val = Value,
+                       .Line = Line,
+                       .Column = Column
                    };
 
                    Area = NULL;
@@ -253,12 +268,16 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    .ValueType = 2,
                    .NPNumber = V
                };
+                Column++;
+
 
                (MIONESIZE)++;
                (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
                (MIONE)[(MIONESIZE)-1] = (MioneObj){
                    .ObjType = 5,
                    .Val = Value,
+                   .Line = Line,
+                   .Column = Column
                };
 
            }
@@ -296,12 +315,15 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                 Vars[VarsSize-1] = Variable;
             }
 
+             Column++;
 
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
             (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType = 4,
                 .Var = Variable,
+                .Line = Line,
+                 .Column = Column
             };
         };
 

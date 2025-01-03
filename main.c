@@ -36,7 +36,7 @@ int main(const int OptionsSize,char **Options)
                     f = fopen(Options[i],"r");
                     if (f){}else
                     {
-                        ErrCall("No file found","M001","");
+                        ErrCall("No file found","M001","",0,0);
                     }
                     break;
                 }
@@ -63,9 +63,9 @@ int main(const int OptionsSize,char **Options)
         int CaseObjSize = 0;
         CaseObj * CASES = FCO(f,&CaseObjSize);
 
-        MioRowsEnd = malloc(0);
+
         int MioObjSize = 0;
-        MioneObj * MioObj = CMO(CASES,CaseObjSize,&MioRowsEnd,&MioRowsEndSize,&MioObjSize);
+        MioneObj * MioObj = CMO(CASES,CaseObjSize,&MioObjSize,1,0);
 
 
         mione(MioObj,MioObjSize);

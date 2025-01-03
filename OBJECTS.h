@@ -30,6 +30,7 @@ typedef struct _AreaObject
     int Size; //值大小
     struct _MioneObject * Area;//給於函數(function)或者執行式(range)。
     int Index; //開頭位置
+
 }AreaObj;
 
 typedef struct _TableObject
@@ -67,6 +68,7 @@ typedef struct _SymbolObject
 {
     char * Name;
     int SymbolType;
+    int CurNumber;
 }SymbolObj;
 
 
@@ -100,6 +102,8 @@ typedef struct _MioneObject
     PromptObj Prompt; //當ObjType為PROMPT時，會用到此提示。
     HeadObj Head; //當ObjType為HEAD時，會用到此標題。
 
+    int Line; //行號
+    int Column; //列號
 
 } MioneObj;
 
@@ -186,7 +190,11 @@ typedef struct _HeadGetObject
     int aSize;
 } HeadGetObj;
 
-
+typedef struct _VariableRequestObject
+{
+    VariableObj * Variables;
+    int VariablesSize;
+} VariableRequestObj;
 
 
 

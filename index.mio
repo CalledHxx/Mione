@@ -1,6 +1,7 @@
-set x =  2 + function
-
+set x  =  2 + function
     /*return 2819.0*/
+
+    set y = 1.1+"a"
 
     return 2819.0
 end(1.0)

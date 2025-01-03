@@ -14,6 +14,7 @@
 
 ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj* Request, const int RequestSize)
 {
+
     HeadGetObj HeadGet = GetHeads();
     
 
@@ -27,6 +28,7 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
     for (int index = 0; index < ObjsSize; index++)
     {
+
         MioneObj Mio = Objs[index];
 
         if (Mio.ObjType == 1) Head = Mio;
@@ -127,12 +129,12 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
             }
         }
-        WorkOnMioIndex++;
     }
 }
 
 ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 {
+
     HeadGetObj HeadGet = GetHeads();
 
     // system("clear");
@@ -147,6 +149,7 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 
     for (int index = 0; index < ObjsSize; index++)
     {
+
         MioneObj Mio = Objs[index];
 
         if (Mio.ObjType == 1) Head = Mio;
@@ -217,6 +220,7 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
             (Pairs[PairsSize - 1].SourceSize)++;
             (Pairs[PairsSize - 1].Source) = realloc(Pairs[PairsSize - 1].Source, sizeof(MioneObj) * (Pairs[PairsSize - 1].SourceSize));
             Pairs[PairsSize - 1].Source[Pairs[PairsSize - 1].SourceSize - 1] = Mio;
+
         }
 
         if (ObjsSize - 1 == index)
@@ -240,6 +244,5 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
                 }
             }
         }
-        WorkOnMioIndex++;
     }
 }

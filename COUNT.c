@@ -86,7 +86,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     ErrCall(
                                         REASON,
                                             "MG001",
-                                        "Maybe you can change the Variable Type to FUNCTION."
+                                        "Maybe you can change the Variable Type to FUNCTION.",
+                                        Pack[FirstBracketIndex - 1].Line,
+                                        Pack[FirstBracketIndex - 1].Column
                                     );
                                 }
                             }
@@ -99,8 +101,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                                    int ButterIndex = WorkOnMioIndex;
-                                    WorkOnMioIndex = Pack[FirstBracketIndex - 1].Val.Area.Index;
+
                                     ValueReturnObj V = Function(
                                         Pack[FirstBracketIndex - 1].Val.Area.Area,
                                         Pack[FirstBracketIndex - 1].Val.Area.Size,
@@ -164,7 +165,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
                                     //todo function call
-                                    WorkOnMioIndex = ButterIndex;
                                     FunctionCalled = 1;
                                 }
                                 else
@@ -172,7 +172,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     ErrCall(
                                         "The Value before `()` Isn't a Function",
                                         "MG002",
-                                        "Maybe you can try `function() <...:Mione> end()`."
+                                        "Maybe you can try `function() <...:Mione> end()`.",
+                                        Pack[FirstBracketIndex - 1].Line,
+                                        Pack[FirstBracketIndex - 1].Column
                                     );
                                 }
                             }
@@ -230,7 +232,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ErrCall(
                                 "You can't connect any Two-side-count-SymbolGet.a to VOID (Meaning Nothing, even no Mione Object).",
                                 "MG003",
-                                "Maybe you can try `1+1` or anything else."
+                                "Maybe you can try `1+1` or anything else.",
+                                Pack[i].Line,
+                                Pack[i].Column
                             );
                         }
                         for (int index = 0; index < SymbolGet.aSize; index++)
@@ -245,7 +249,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ErrCall(
                                 "bbbbb",
                                 "MG007",
-                                "Maybe you can try `typeof 1` or anything else."
+                                "Maybe you can try `typeof 1` or anything else.",
+                                Pack[i].Line,
+                                Pack[i].Column
                             );
                         }
                         for (int index = 0; index < SymbolGet.aSize; index++)
@@ -260,7 +266,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ErrCall(
                                "ccccc",
                                "MG008",
-                               "Maybe you can try `- 1` or anything else."
+                               "Maybe you can try `- 1` or anything else.",
+                                Pack[i].Line,
+                                Pack[i].Column
                            );
                         }
 
@@ -317,8 +325,12 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)){ ErrCall("Type Error","MG0011111","");}
-                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) {ErrCall("Type Error","MG0011111","");}
+                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)){ ErrCall("Type Error","MG0011111","",
+                                Pack[i].Line,
+                                Pack[i].Column);}
+                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) {ErrCall("Type Error","MG0011111","",
+                                Pack[i].Line,
+                                Pack[i].Column);}
 
                             if (Target1.ValueType == 3) UsePointNumber = 1;
                             if (Target2.ValueType == 3) UsePointNumber = 1;
@@ -379,7 +391,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ErrCall(
                                 "You must only connect Two-side-count-SymbolGet.a to VV(Variable or Value).",
                                 "MG005",
-                                "Maybe you can try `1+1` or anything else."
+                                "Maybe you can try `1+1` or anything else.",
+                                Pack[i].Line,
+                                Pack[i].Column
                             );
                         }
                         CalculateType = 0;
@@ -393,8 +407,12 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
                             if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
 
-                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 1","MG0011113","");
-                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 2","MG0011113","");
+                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 1","MG0011113","",
+                                Pack[i].Line,
+                                Pack[i].Column);
+                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 2","MG0011113","",
+                                Pack[i].Line,
+                                Pack[i].Column);
 
                             if (Target1.ValueType == 3) UsePointNumber = 1;
                             if (Target2.ValueType == 3) UsePointNumber = 1;
@@ -456,7 +474,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ErrCall(
                                 "You must only connect Two-side-count-SymbolGet.a to VV(Variable or Value).",
                                 "MG005",
-                                "Maybe you can try `1*1` or anything else."
+                                "Maybe you can try `1*1` or anything else.",
+                                Pack[i].Line,
+                                Pack[i].Column
                             );
                         }
                         CalculateType = 0;
@@ -476,8 +496,12 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
                             if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
 
-                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 3","MG0011116","");
-                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 4","MG0011116","");
+                        if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 3","MG0011116","",
+                            Pack[i].Line,
+                            Pack[i].Column);
+                        if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 4","MG0011116","",
+                            Pack[i].Line,
+                            Pack[i].Column);
 
                             if (Target1.ValueType == 3) UsePointNumber = 1;
                             if (Target2.ValueType == 3) UsePointNumber = 1;
@@ -547,7 +571,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
                         if (Target.ValueType == 2 || Target.ValueType == 3){}else
                         {
-                            ErrCall("Type error aaaa","MG00111","aa");
+                            ErrCall("Type error aaaa","MG00111","aa",
+                                Pack[i].Line,
+                                Pack[i].Column);
                         }
 
 
@@ -597,18 +623,28 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ValueObj Target2 ;
 
 
-                            if (Pack[i - 2].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR"); else Target1 = Pack[i - 2].Val;
-                            if (Pack[i].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR"); else Target2 = Pack[i].Val;
+                        if (Pack[i - 2].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR",
+                            Pack[i].Line,
+                            Pack[i].Column); else Target1 = Pack[i - 2].Val;
+                        if (Pack[i].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR",
+                            Pack[i].Line,
+                            Pack[i].Column); else Target2 = Pack[i].Val;
 
-                            if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("TODO!!!","MG001131211","");
-                            if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("TODO!!!","MG001131211","");
+                        if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("TODO!!!","MG001131211","",
+                            Pack[i].Line,
+                            Pack[i].Column);
+                        if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("TODO!!!","MG001131211","",
+                            Pack[i].Line,
+                            Pack[i].Column);
 
                             if (Target1.ValueType == 3) UsePointNumber = 1;
                             if (Target2.ValueType == 3) UsePointNumber = 1;
 
                             if (UsePointNumber)
                             {
-                                ErrCall("Point Number can`t change in to another Point Number","123456","");
+                                ErrCall("Point Number can`t change in to another Point Number","123456","",
+                                Pack[i].Line,
+                                Pack[i].Column);
                             }
                             else
                             {
@@ -648,20 +684,26 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                         // .1
                         ValueObj Target;
 
-                        if (Pack[i].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR");
+                        if (Pack[i].ObjType == 4) ErrCall("to do ; Variable can`t be Point Number","MG00111","IT IS TODO NOT ERROR",
+                                Pack[i].Line,
+                                Pack[i].Column);
                         if (Pack[i].ObjType == 5) Target = Pack[i].Val;
 
                         if (Target.ValueType == 3) UsePointNumber = 1;
 
                         if (Target.ValueType == 2 || Target.ValueType == 3){}else
                         {
-                            ErrCall("Type error aaaabbbbbb","MG00111","aa");
+                            ErrCall("Type error aaaabbbbbb","MG00111","aa",
+                                Pack[i].Line,
+                                Pack[i].Column);
                         }
 
 
                         if (UsePointNumber)
                         {
-                            ErrCall("Point Number can`t change in to another Point Number","123456","");
+                            ErrCall("Point Number can`t change in to another Point Number","123456","",
+                                Pack[i].Line,
+                                Pack[i].Column);
                         }else
                         {
                             long int Value1 = 0;
