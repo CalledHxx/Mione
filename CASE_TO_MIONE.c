@@ -73,6 +73,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
 
+
         //HEAD
          if (ChildCount == 0) for (int Ci = 0; Ci < HeadGet.aSize; Ci++) if (strcmp(CASES[i].ObjName,HeadGet.a[Ci].Name) == 0)
         {

@@ -129,7 +129,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                             NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
                                             NewPack[NewPackSize - 1] = (MioneObj){
                                                 .ObjType = 5,
-                                                .Val = V.Value[index]
+                                                .Val = V.Value[index],
+                                                .Line = Pack[i-1].Line,
+                                                .Column = Pack[i-1].Column
                                             };
 
                                         }
@@ -324,10 +326,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-
                             if (!(Target1.ValueType == 2 || Target1.ValueType == 3)){ ErrCall("Type Error","MG0011111","",
-                                Pack[i].Line,
-                                Pack[i].Column);}
+                                Pack[i-2].Line,
+                                Pack[i-2].Column);}
                             if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) {ErrCall("Type Error","MG0011111","",
                                 Pack[i].Line,
                                 Pack[i].Column);}
@@ -359,7 +360,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 3,
                                         .PNumber = Value1 + Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -380,7 +383,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 2,
                                         .NPNumber = Value1 + Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -408,8 +413,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
 
                             if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 1","MG0011113","",
-                                Pack[i].Line,
-                                Pack[i].Column);
+                                Pack[i-2].Line,
+                                Pack[i-2].Column);
                             if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 2","MG0011113","",
                                 Pack[i].Line,
                                 Pack[i].Column);
@@ -442,7 +447,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 3,
                                         .PNumber = Value1 * Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -463,7 +470,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 2,
                                         .NPNumber = Value1 * Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -497,8 +506,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
 
                         if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 3","MG0011116","",
-                            Pack[i].Line,
-                            Pack[i].Column);
+                            Pack[i-2].Line,
+                            Pack[i-2].Column);
                         if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("Type Error 4","MG0011116","",
                             Pack[i].Line,
                             Pack[i].Column);
@@ -530,7 +539,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 3,
                                         .PNumber = Value1 -  Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -551,7 +562,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 2,
                                         .NPNumber = Value1 - Value2,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -589,7 +602,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 .Val = (ValueObj){
                                     .ValueType = 3,
                                     .PNumber = Value1
-                                }
+                                },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                             };
 
                             PastCost = 1;
@@ -605,7 +620,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 .Val = (ValueObj){
                                     .ValueType = 2,
                                     .NPNumber = Value1
-                                }
+                                },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                             };
 
                             PastCost = 1;
@@ -631,8 +648,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             Pack[i].Column); else Target2 = Pack[i].Val;
 
                         if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("TODO!!!","MG001131211","",
-                            Pack[i].Line,
-                            Pack[i].Column);
+                            Pack[i-2].Line,
+                            Pack[i-2].Column);
                         if (!(Target2.ValueType == 2 || Target2.ValueType == 3)) ErrCall("TODO!!!","MG001131211","",
                             Pack[i].Line,
                             Pack[i].Column);
@@ -674,7 +691,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                     .Val = (ValueObj){
                                         .ValueType = 3,
                                         .PNumber = Value1*1 + Points,
-                                    }
+                                    },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                                 };
 
                                 PastCost = 2;
@@ -731,7 +750,9 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 .Val = (ValueObj){
                                     .ValueType = 3,
                                     .PNumber = Points
-                                }
+                                },
+                                    .Line = Pack[i].Line,
+                                    .Column = Pack[i].Column
                             };
 
                             PastCost = 1;

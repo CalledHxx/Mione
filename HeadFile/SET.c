@@ -17,16 +17,12 @@ HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
     HeadReturnObj ToReturn;
     ToReturn.ToState = 0;
 
-    int totalIndex = 0;
-    for(int i=0;i<PairsSize;i++) totalIndex+=Pairs[i].SourceSize;
-    int accumulationIndex = 0;
 
     //set x
     //1   2
 
     for (int i = 0; i < PairsSize; i++)
     {
-        accumulationIndex = accumulationIndex+Pairs[i].SourceSize;
 
         MioneObj Prompt = Pairs[i].Prompt;
 

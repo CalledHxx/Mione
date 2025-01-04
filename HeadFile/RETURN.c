@@ -3,6 +3,7 @@
 //
 
 #include "../OBJECTS.h"
+#include "../REQUEST.h"
 #include "../COUNT.h"
 #include <stdio.h>
 
@@ -13,25 +14,22 @@ HeadReturnObj RETURN(struct _PairObject*Pairs,int PairsSize)
     for (int i = 0; i < PairsSize; i++)
     {
         MioneObj Prompt = Pairs[i].Prompt;
-        if (Prompt.ObjType == 0)//偽Head
+
+        if (Prompt.ObjType == 1) //Head代替Prompt
         {
+
+            VariableRequestObj Request = REQUEST(Pairs[i].Source, Pairs[i].SourceSize);
         }
         if (Prompt.ObjType == 2)
         {
-        }
 
-        if (i == 0) { //Head代替Prompt
             CountObj Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
-
 
             ToReturn.ToState = 1;
             ToReturn.Vs = (ValueReturnObj){
                 .ValueSize = Counted.ValueSize,
                .Value = Counted.Value,
             };
-        }else
-        {
-
 
         }
 
