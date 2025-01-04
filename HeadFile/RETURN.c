@@ -18,10 +18,7 @@ HeadReturnObj RETURN(struct _PairObject*Pairs,int PairsSize)
         if (Prompt.ObjType == 1) //Head代替Prompt
         {
 
-            VariableRequestObj Request = REQUEST(Pairs[i].Source, Pairs[i].SourceSize);
-        }
-        if (Prompt.ObjType == 2)
-        {
+            //VariableRequestObj Request = REQUEST(Pairs[i].Source, Pairs[i].SourceSize);
 
             CountObj Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
 
@@ -30,6 +27,11 @@ HeadReturnObj RETURN(struct _PairObject*Pairs,int PairsSize)
                 .ValueSize = Counted.ValueSize,
                .Value = Counted.Value,
             };
+        }
+        if (Prompt.ObjType == 2)
+        {
+
+
 
         }
 

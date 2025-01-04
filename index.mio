@@ -1,6 +1,4 @@
-set x  =  "" + function
+set x =  0 + function
     /*return 2819.0*/
-
-
     return 2819.0
 end(1.0)
