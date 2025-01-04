@@ -93,8 +93,7 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                 Pairs[PairsSize - 1].SourceSize = 0;
                 Pairs[PairsSize - 1].Source = malloc(0);
 
-
-
+                printf("me %s\n",Mio.Symbol.Name);
 
                 HeadFuc = SVV;
             }
@@ -213,6 +212,7 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 
                 Pairs[PairsSize - 1].SourceSize = 0;
                 Pairs[PairsSize - 1].Source = malloc(0);
+
 
                 HeadFuc = SVV;
             }

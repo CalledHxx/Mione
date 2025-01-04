@@ -2,6 +2,7 @@
 // Created by calle on 24-12-28.
 //
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -79,6 +80,8 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
     int CaseObjectsSize = 0;
 
     int inLockinType = 0; // 是否在限制別類裡，如果是則此項表示限制別類的類型。例如：字串=1
+
+    int ThisInLockinLast = 0;//是否為inLockinType的最後一項，辨別使用
 
     int superCharSize = 0; //是否為特殊字符 '\' 的後項，表示 '\'後(包含)有多少字元進行運算
 
@@ -285,14 +288,21 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                     ThislastSuperChar = 1;
                     break;
                 }
-                case 5:
-                    if (c == '\n') inLockinType = 0;
 
-                    break;
-                case 6:
-                    if (LastCharType == CharType)  if (LastChar == '*' || c == '/')inLockinType = 0;
-
-                    break;
+            }
+            break;
+        case 2:
+            if (c == '\n')
+            {
+                inLockinType = 0;
+                ThisInLockinLast = 1;
+            }
+            break;
+        case 3:
+            if (LastCharType == CharType)  if (LastChar == '*' || c == '/')
+            {
+                inLockinType = 0;
+                ThisInLockinLast = 1;
             }
             break;
         }
@@ -309,14 +319,14 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                 {
                     if (LastChar == '/')
                     {
-                        if (c == '/') inLockinType = 5;
-                        if (c == '*') inLockinType = 6;
+                        if (c == '/') inLockinType = 2;
+                        if (c == '*') inLockinType = 3;
+
 
                         CASESize--;
                         CASE[CASESize] = (char)0;
                         CASE = realloc(CASE, CASESize);
                     }
-
                 }
             }
             else //一般結束 沒有被限制的情況下
@@ -334,7 +344,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                         CASESize++;
                         CASE = realloc(CASE, CASESize);
                         CASE[CASESize - 1] = 0;
-
 
 
                         CaseObjectsSize++;
@@ -428,11 +437,13 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
 
                 break;
             case 9:
-                if (!inLockinType)
+                if (!inLockinType && !ThisInLockinLast)
                 {
                     CASESize++;
                     CASE = realloc(CASE, CASESize);
                     CASE[CASESize - 1] = c;
+
+
                 }
 
                 break;
@@ -522,12 +533,16 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
         //printf("'%c' '%d' '%d'\n",c,CharType,ThislastSuperChar);
         LastCharType = CharType;
         LastChar = c;
+        ThisInLockinLast = 0;
+        ThisInLockinLast = 0;
         if (ZEROTILSC) ThislastSuperChar=0; //在Loop內 別清除 ZEROTILSC
         // ThislastSuperChar = 0;1
 
         if (c == EOF) break;
     }
     while (1);
+
+
 
     *CASESIZE = CaseObjectsSize;
     return CaseObjects;
