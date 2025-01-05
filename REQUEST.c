@@ -11,18 +11,23 @@ VariableRequestObj REQUEST(MioneObj* PACK,int PACKSize){
 
   for (int PACKIndex = 0; PACKIndex < PACKSize;PACKIndex++) {
 
-    if (PACK[PACKIndex].ObjType == 3){
+    switch (PACK[PACKIndex].ObjType) {
+      case 3:
+        switch (PACK[PACKIndex].Symbol.CurNumber){
+          case 2:
+            printf("Pairs\n");
+            break;
+          default:
+            ErrCall("M123","Unkown Symbol","",PACK[PACKIndex].Line,PACK[PACKIndex].Column);
+            break;
+        }
+        break;
+      case 4:
+        break;
+      default:
+        ErrCall("M12345","Object Type Error",NULL,PACK[PACKIndex].Line,PACK[PACKIndex].Column);
+       break;
 
-      switch (PACK[PACKIndex].Symbol.CurNumber){
-        case 2:
-          break;
-        default:
-          ErrCall("M123","Unkown Symbol","",PACK[PACKIndex].Line,PACK[PACKIndex].Column);
-          break;
-      }
-      if(PACK[PACKIndex].Symbol.CurNumber == 2){
-        printf("Pairs\n");
-      }
     }
   }
 
