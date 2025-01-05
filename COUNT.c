@@ -239,10 +239,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 Pack[i].Column
                             );
                         }
-                        for (int index = 0; index < SymbolGet.aSize; index++)
-                        {
-                            if (SymbolGet.a[index].xIndex == CalculateLevel) if (strcmp(SymbolGet.a[index].Name, Pack[i].Symbol.Name) == 0)CalculateType = SymbolGet.a[index].CurNumber;
-                        }
+                        if (Pack[i].Symbol.xIndex == CalculateLevel) CalculateType = Pack[i].Symbol.CurNumber;
+
                         break;
                     case 2:
 
@@ -256,10 +254,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 Pack[i].Column
                             );
                         }
-                        for (int index = 0; index < SymbolGet.aSize; index++)
-                        {
-                            if (SymbolGet.a[index].xIndex == CalculateLevel) if (strcmp(SymbolGet.a[index].Name, Pack[i].Symbol.Name) == 0)CalculateType = SymbolGet.a[index].CurNumber;
-                        }
+                        if (Pack[i].Symbol.xIndex == CalculateLevel) CalculateType = Pack[i].Symbol.CurNumber;
+
                        break;
                     case 3:
 
@@ -283,12 +279,14 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 if (i-1>=0 && (Pack[i-1].ObjType == 4 || Pack[i-1].ObjType == 5))
                                 {
 
-                                    if (SymbolGet.a[index].yIndex == CalculateLevel)  CalculateType = SymbolGet.a[index].CurNumber;
+                                    if (Pack[i].Symbol.yIndex == CalculateLevel) CalculateType = Pack[i].Symbol.CurNumber;
+
 
                                 }else
                                 {
 
-                                    if (SymbolGet.a[index].xIndex == CalculateLevel) CalculateType = SymbolGet.a[index].CurNumber;
+                                    if (Pack[i].Symbol.xIndex == CalculateLevel) CalculateType = Pack[i].Symbol.CurNumber;
+
 
                                 }
 

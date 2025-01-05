@@ -26,6 +26,10 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
     PairObj *Pairs = malloc(0);
     int PairsSize = 0;
 
+    MioneObj LastMio = (MioneObj) {
+        .ObjType = 0
+    };
+
     for (int index = 0; index < ObjsSize; index++)
     {
 
@@ -33,7 +37,9 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
         if (Mio.ObjType == 1) Head = Mio;
 
-        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1)
+        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1 ||
+        (LastMio.ObjType == Mio.ObjType && (Mio.ObjType == 3 ? !Mio.Symbol.CanConnect : 1))
+            )
         {
             if (HeadFuc != 0) {
                 HeadReturnObj a = HeadFuc(Pairs, PairsSize);
@@ -146,6 +152,10 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
     PairObj *Pairs = malloc(0);
     int PairsSize = 0;
 
+    MioneObj LastMio = (MioneObj) {
+        .ObjType = 0
+    };
+
     for (int index = 0; index < ObjsSize; index++)
     {
 
@@ -153,7 +163,9 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 
         if (Mio.ObjType == 1) Head = Mio;
 
-        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1)
+        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1 ||
+        (LastMio.ObjType == Mio.ObjType && (Mio.ObjType == 3 ? !Mio.Symbol.CanConnect : 1))
+            )
         {
             if (HeadFuc != 0) {
                 HeadReturnObj a = HeadFuc(Pairs, PairsSize);

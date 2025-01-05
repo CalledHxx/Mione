@@ -69,6 +69,11 @@ typedef struct _SymbolObject
     char * Name;
     int SymbolType;
     int CurNumber;
+    int CanConnect;
+
+    int xIndex;
+    int yIndex;
+    int zIndex;
 }SymbolObj;
 
 
@@ -132,16 +137,7 @@ typedef struct _HeadFucObject
     char * Name;
 } HeadFucObj;
 
-typedef struct _SymbolsCaseObject{
-  char * Name;
-  int SymbolType;
-  int xIndex;
-  int yIndex;
-  int zIndex;
-  int CurNumber;
 
-
-} SymbolsCaseObj;
 
 typedef struct _PairObject
 {
@@ -180,7 +176,7 @@ typedef struct _HeadReturnObject
 
 typedef struct _SymbolGetObject
 {
-    SymbolsCaseObj * a;
+    SymbolObj * a;
     int aSize;
 } SymbolGetObj;
 

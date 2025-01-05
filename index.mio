@@ -1,6 +1,5 @@
 set x =  1 + function
-    /* return 2819.0
-    return 2819.0 + 1 */
+    /* return 2819.0*/
+    return 2819.0 + 1
 
-    return 0.0
 end(1.0)

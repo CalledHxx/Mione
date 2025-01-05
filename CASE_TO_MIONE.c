@@ -119,11 +119,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         {
 
 
-            SymbolObj Symbol = (SymbolObj){
-                .Name = CASES[i].ObjName,
-                .SymbolType = SymbolGet.a[Ci].SymbolType,
-                .CurNumber = SymbolGet.a[Ci].CurNumber,
-            };
+            SymbolObj Symbol = SymbolGet.a[Ci];
              Column++;
 
             (MIONESIZE)++;
