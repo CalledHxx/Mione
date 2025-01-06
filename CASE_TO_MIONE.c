@@ -38,12 +38,11 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
 
-    int LastPaired = 0;
 
 
     int Lock = -1; //被封鎖到...
 
-    int RF = 0; //Range Function
+    int goEndType = 0; //range or function or lights
 
     VariableObj* Vars = malloc(0);
     int VarsSize = 0;
@@ -155,7 +154,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
 
-           //Value : Function or range END
+           //Value : lights,function or range END 
            if (strcmp(CASES[i].ObjName,"end") == 0)
            {
 
@@ -177,7 +176,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
                    ValueObj Value = (ValueObj){
-                       .ValueType = RF == 1 ? 5 : 4,
+                       .ValueType = goEndType == 1 ? 5 : (goEndType == 2 ? 4 : 7),
                        .Area = eArea,
                    };
 
@@ -225,7 +224,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                ChildCount++;
                if (ChildCount == 1)
                {
-                   RF = 2;
+                   goEndType = 2;
                    Paired = 5;
 
                }
@@ -240,9 +239,22 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                ChildCount++;
                if (ChildCount == 1)
                {
-                   RF = 1;
+                   goEndType = 1;
                    Paired = 5;
 
+               }
+           }
+
+           //Value : Lights
+
+
+           if (strcmp(CASES[i].ObjName,"lights") == 0)
+           {
+               ChildCount++;
+               if (ChildCount == 1)
+               {
+                   goEndType = 3;
+                   Paired = 5;
                }
            }
 
@@ -324,7 +336,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         if (!ChildCount) //一班執行的子項內容
         {
         }
-        LastPaired = Paired;
        }
     }
 

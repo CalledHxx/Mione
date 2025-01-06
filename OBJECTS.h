@@ -50,6 +50,7 @@ typedef struct _ValueObject
     4:函數
     5:執行式
     6:表單
+    7:開關
     */
     struct _AreaObject Area; //給於函數(function)或者執行式(range)。
     char * String; //給予文字(string)。
