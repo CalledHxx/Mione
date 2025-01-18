@@ -21,6 +21,9 @@ HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
     //set x
     //1   2
 
+    VariableRequestObj Request = {.VariablesSize = 0};
+    CountObj Counted = {.ValueSize = 0};
+
     for (int i = 0; i < PairsSize; i++)
     {
 
@@ -28,17 +31,25 @@ HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
 
         if (Prompt.ObjType == 1) //Head代替Prompt
         {
-
-            VariableRequestObj Request = REQUEST(Pairs[i].Source, Pairs[i].SourceSize);
+            Request = REQUEST(Pairs[i].Source, Pairs[i].SourceSize);
         }
         if (Prompt.ObjType == 2)
         {
+            Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
 
-            CountObj Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
+            if (Counted.ValueSize>Request.VariablesSize) ErrCall("More variables than values","M111",NULL,Prompt.Line,Prompt.Column);
 
+
+            for(int CountedIndex = 0; CountedIndex < Counted.ValueSize; CountedIndex++)
+            {
+                Request.Variables[CountedIndex].V =  Counted.Value[CountedIndex];
+            }
         }
-
     }
+
+
+
+
 
     return ToReturn;
 }

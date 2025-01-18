@@ -8,25 +8,16 @@
 #include <string.h>
 #include "OBJECTS.h"
 #include "SYMBOL_DEF.h"
+#include "PROMPT_DEF.h"
 #include "HeadFile/AllHeads.h"
 
 
-
-
-char* Prompts[] =
-{
-    "=",
-    "then",
-    "else"
-};
 
 
 MioneObj *CMO(CaseObj*CASES,int CASESIZE,
     int * SIZE,int LineADD,int ColumnADD)
 {
 
-    HeadGetObj HeadGet = GetHeads();
-    SymbolGetObj SymbolGet = GetSymbols();
 
     MioneObj *MIONE = 0;
     int MIONESIZE = 0;
@@ -71,66 +62,77 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
 
         //HEAD
-         if (ChildCount == 0) for (int Ci = 0; Ci < HeadGet.aSize; Ci++) if (strcmp(CASES[i].ObjName,HeadGet.a[Ci].Name) == 0)
-        {
+         if (ChildCount == 0) for (int Ci = 0;1; Ci++)
+         {
+             if (Heads[Ci].CurNumber == -1) break;
 
-            HeadObj Head = (HeadObj){
-                .Name = CASES[i].ObjName,
-            };
+             if (strcmp(CASES[i].ObjName,Heads[Ci].Name) == 0)  {
 
-             Column++;
 
-            (MIONESIZE)++;
-             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
-             (MIONE)[(MIONESIZE)-1] = (MioneObj){
-                .ObjType= 1,
-                .Head = Head,
-                 .Line = Line,
-                 .Column = Column
-            };
+                 HeadObj Head = (HeadObj){
+                     .Name = CASES[i].ObjName,
+                 };
 
-            Paired = 1;
+                 Column++;
 
-        }
+                 (MIONESIZE)++;
+                 (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
+                 (MIONE)[(MIONESIZE)-1] = (MioneObj){
+                     .ObjType= 1,
+                     .Head = Head,
+                      .Line = Line,
+                      .Column = Column
+                 };
+
+                 Paired = 1;
+
+             }
+         }
         //PROMPT
-         if (ChildCount == 0) for (int Ci = 0; Ci < sizeof( Prompts)/sizeof( Prompts[0]); Ci++) if (strcmp(CASES[i].ObjName,Prompts[Ci]) == 0)
+         if (ChildCount == 0) for (int Ci = 0;1; Ci++)
         {
+             if (Prompts[Ci].CurNumber == -1) break;
 
-            PromptObj Prompt = (PromptObj){
-                .Name = CASES[i].ObjName,
-            };
-             Column++;
-            (MIONESIZE)++;
-            (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
-            (MIONE)[(MIONESIZE)-1] = (MioneObj){
-                .ObjType= 2,
-                .Prompt = Prompt,
-                 .Line = Line,
-                .Column = Column
-            };
-            Paired = 2;
+             if (strcmp(CASES[i].ObjName,Prompts[Ci].Name) == 0)
+             {
+                 PromptObj Prompt = (PromptObj){
+                     .Name = CASES[i].ObjName,
+                 };
+                 Column++;
+                 (MIONESIZE)++;
+                 (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
+                 (MIONE)[(MIONESIZE)-1] = (MioneObj){
+                     .ObjType= 2,
+                     .Prompt = Prompt,
+                      .Line = Line,
+                     .Column = Column
+                 };
+                 Paired = 2;
+             }
+
 
         }
 
 
         //SYMBOL
-         if (ChildCount == 0) for (int Ci = 0; Ci <SymbolGet.aSize; Ci++) if (strcmp(CASES[i].ObjName,SymbolGet.a[Ci].Name) == 0)
+         if (ChildCount == 0) for (int Ci = 0; 1; Ci++)
         {
+             if (Symbols[Ci].CurNumber == -1)  break;
 
+             if (strcmp(CASES[i].ObjName,Symbols[Ci].Name) == 0)
+             {
+                 Column++;
 
-            SymbolObj Symbol = SymbolGet.a[Ci];
-             Column++;
-
-            (MIONESIZE)++;
-            (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
-            (MIONE)[(MIONESIZE)-1] = (MioneObj){
-                .ObjType= 3,
-                .Symbol = Symbol
-                ,.Line = Line,
-                .Column = Column
-            };
-            Paired = 3;
-
+                 (MIONESIZE)++;
+                 (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
+                 (MIONE)[(MIONESIZE)-1] = (MioneObj){
+                     .ObjType= 3,
+                     .Symbol = Symbols[Ci]
+                     ,.Line = Line,
+                     .Column = Column
+                 };
+                 Paired = 3;
+             }
         }
 
         //Value : String
@@ -338,8 +340,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         }
        }
     }
-
-
 
     (*SIZE) = (MIONESIZE);
     return MIONE;

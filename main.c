@@ -47,8 +47,6 @@ int main(const int OptionsSize,char **Options)
             {
                 if (strcmp(strlwr(Options[i]),"-f")==0)  Mode = 1;
             }
-
-
         }
     }else
     {

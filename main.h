@@ -22,7 +22,7 @@
 
 
 
-#define MIONE_VERSION "Sunfish-0.1"
+#define MIONE_VERSION "Mione-0.1"
 
 
 #ifndef MAIN_H

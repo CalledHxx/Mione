@@ -20,13 +20,13 @@ int CheckCharType(const char Char)
 
     if ((Char == '\'')) return 4;
 
-    if (NULL) return 5;
+    //if (NULL) return 5;
 
-    if (NULL) return 6;
+    //if (NULL) return 6;
 
-    if (NULL) return 7;
+    //if (NULL) return 7;
 
-    if (NULL) return 8;
+    //if (NULL) return 8;
 
     //Symbols
 

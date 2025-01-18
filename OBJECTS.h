@@ -81,13 +81,15 @@ typedef struct _SymbolObject
 typedef struct _PromptObject
 {
     char * Name;
+    int CurNumber;
 
 }PromptObj;
 
 typedef struct _HeadObject
 {
     char * Name;
-
+    int CurNumber;
+    struct _HeadReturnObject (*Fuc)(struct _PairObject*Pairs,int PairsSize);
 }HeadObj;
 
 
@@ -132,12 +134,6 @@ typedef struct _CaseObject
  *
  */
 
-typedef struct _HeadFucObject
-{
-    struct _HeadReturnObject (*Fuc)(struct _PairObject*Pairs,int PairsSize);
-    char * Name;
-} HeadFucObj;
-
 
 
 typedef struct _PairObject
@@ -175,17 +171,6 @@ typedef struct _HeadReturnObject
 
 } HeadReturnObj;
 
-typedef struct _SymbolGetObject
-{
-    SymbolObj * a;
-    int aSize;
-} SymbolGetObj;
-
-typedef struct _HeadGetObject
-{
-    HeadFucObj * a;
-    int aSize;
-} HeadGetObj;
 
 typedef struct _VariableRequestObject
 {

@@ -9,13 +9,13 @@
 
 #include "ERR.h"
 #include "Mione.h"
+#include "PROMPT_DEF.h"
 #include "SYMBOL_DEF.h"
 
 
 
 CountObj COUNT(MioneObj*Pack,int PackSize)
 {
-    SymbolGetObj SymbolGet = GetSymbols();
 
     int FirstBracketIndex = 0;
     int IfBrackets = 0; // 0 = 0 1 = only ( 2 = ()
@@ -271,9 +271,11 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                         }
 
 
-                        for (int index = 0; index < SymbolGet.aSize; index++)
+                        for (int index = 0; 1 ; index++)
                         {
-                            if (strcmp(SymbolGet.a[index].Name, Pack[i].Symbol.Name) == 0)
+                            if (Symbols[index].CurNumber == -1) break;
+
+                            if (strcmp(Symbols[index].Name, Pack[i].Symbol.Name) == 0)
                             {
 
                                 if (i-1>=0 && (Pack[i-1].ObjType == 4 || Pack[i-1].ObjType == 5))
@@ -401,6 +403,22 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                         }
                         CalculateType = 0;
                         break;
+                case 2: // ,
+                    ValueObj Target = Pack[i].Val;
+
+                    Out = (MioneObj){
+                        .ObjType = 5,
+                        .Val = Target,
+                        .Line = Pack[i].Line,
+                        .Column = Pack[i].Column
+                    };
+
+                    PastCost = 1;
+
+
+                    CalculateType = 0;
+
+                    break;
                     case 3: // *
                         if (Pack[i - 2].ObjType == 4 || Pack[i - 2].ObjType == 5)
                         {
@@ -815,6 +833,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
     ValueObj * VPack = malloc(0);
     int VPackSize = 0;
+
+    //printf("sizeof %d\n",PackSize);
 
 
     for (int i = 0; i < PackSize; i++)

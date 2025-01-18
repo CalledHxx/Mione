@@ -15,8 +15,7 @@
 ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj* Request, const int RequestSize)
 {
 
-    HeadGetObj HeadGet = GetHeads();
-    
+
 
     MioneObj Head = (MioneObj) {
         .ObjType = 0
@@ -37,10 +36,13 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
         if (Mio.ObjType == 1) Head = Mio;
 
-        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1 ||
+       if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) ||
+            Mio.ObjType == 1 ||
         (LastMio.ObjType == Mio.ObjType && (Mio.ObjType == 3 ? !Mio.Symbol.CanConnect : 1))
             )
         {
+
+
             if (HeadFuc != 0) {
                 HeadReturnObj a = HeadFuc(Pairs, PairsSize);
 
@@ -63,9 +65,10 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
         if (Mio.ObjType == 1) // Head
         {
-            for (int i = 0; i < HeadGet.aSize; i++)
+            for (int i = 0; 1; i++)
             {
-                if (strcmp(Mio.Head.Name, HeadGet.a[i].Name) == 0)
+                if (Heads[i].CurNumber == -1) break;
+                if (strcmp(Mio.Head.Name, Heads[i].Name) == 0)
                 {
                     PairsSize++;
                     Pairs = realloc(Pairs, sizeof(struct _PairObject) * PairsSize);
@@ -74,9 +77,10 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                     Pairs[PairsSize - 1].SourceSize = 0;
                     Pairs[PairsSize - 1].Source = malloc(0);
 
-                    HeadFuc = HeadGet.a[i].Fuc;
+                    HeadFuc = Heads[i].Fuc;
                 }
             }
+
         }
 
         if (Mio.ObjType == 2) // PROMPT
@@ -99,7 +103,6 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                 Pairs[PairsSize - 1].SourceSize = 0;
                 Pairs[PairsSize - 1].Source = malloc(0);
 
-                printf("me %s\n",Mio.Symbol.Name);
 
                 HeadFuc = SVV;
             }
@@ -107,6 +110,7 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
             (Pairs[PairsSize - 1].SourceSize)++;
             (Pairs[PairsSize - 1].Source) = realloc(Pairs[PairsSize - 1].Source, sizeof(MioneObj) * (Pairs[PairsSize - 1].SourceSize));
             Pairs[PairsSize - 1].Source[Pairs[PairsSize - 1].SourceSize - 1] = Mio;
+
         }
 
         if (ObjsSize - 1 == index)
@@ -119,9 +123,6 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                 PairsSize = 0;
 
 
-
-
-
                 switch (a.ToState)
                 {
                 case 1:
@@ -129,18 +130,17 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
 
                 case 2:
                     index = index - a.Useless; //-1+1
+                    break;
                 }
-
-
             }
         }
+        LastMio = Mio;
     }
 }
 
 ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 {
 
-    HeadGetObj HeadGet = GetHeads();
 
     // system("clear");
 
@@ -163,10 +163,14 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 
         if (Mio.ObjType == 1) Head = Mio;
 
-        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) || Mio.ObjType == 1 ||
+
+        if ((Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0) ||
+            Mio.ObjType == 1 ||
         (LastMio.ObjType == Mio.ObjType && (Mio.ObjType == 3 ? !Mio.Symbol.CanConnect : 1))
             )
         {
+
+
             if (HeadFuc != 0) {
                 HeadReturnObj a = HeadFuc(Pairs, PairsSize);
 
@@ -189,9 +193,10 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
 
         if (Mio.ObjType == 1) // Head
         {
-            for (int i = 0; i < HeadGet.aSize; i++)
+            for (int i = 0; 1; i++)
             {
-                if (strcmp(Mio.Head.Name, HeadGet.a[i].Name) == 0)
+                if (Heads[i].CurNumber == -1) break;
+                if (strcmp(Mio.Head.Name, Heads[i].Name) == 0)
                 {
                     PairsSize++;
                     Pairs = realloc(Pairs, sizeof(struct _PairObject) * PairsSize);
@@ -200,7 +205,7 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
                     Pairs[PairsSize - 1].SourceSize = 0;
                     Pairs[PairsSize - 1].Source = malloc(0);
 
-                    HeadFuc = HeadGet.a[i].Fuc;
+                    HeadFuc = Heads[i].Fuc;
                 }
             }
         }
@@ -256,5 +261,6 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
                 }
             }
         }
+        LastMio = Mio;
     }
 }

@@ -8,34 +8,19 @@
 #include "SET.h"
 #include "RETURN.h"
 
-HeadFucObj HeadFucs[]  = {
-    (HeadFucObj){
+HeadObj Heads[]  = {
+    (HeadObj){
         .Fuc = SET,
-        .Name = "set"
+        .Name = "set",
+        .CurNumber = 1
     },
-    (HeadFucObj){
+    (HeadObj){
         .Fuc = RETURN,
-        .Name = "return"
+        .Name = "return",
+        .CurNumber = 2
     },
-};
 
-HeadGetObj GetHeads()
-{
-    int aSize = 0;
-    HeadFucObj * a = malloc(0);
-
-
-
-    for (int i = 0; i < sizeof(HeadFucs)/sizeof(HeadFucs[0]); i++)
-    {
-        aSize++;
-        a = realloc(a, aSize * sizeof(HeadFucObj));
-        a[aSize-1] = HeadFucs[i];
+    (HeadObj){
+        .CurNumber = -1
     }
-
-
-    return (HeadGetObj){
-        .a = a,
-        .aSize = aSize,
-    };
-}
+};
