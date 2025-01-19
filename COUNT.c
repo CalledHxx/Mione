@@ -67,10 +67,71 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
                                 if (Pack[FirstBracketIndex - 1].VarUP->Val.ValueType == 4)
                                 {
+                                    ValueReturnObj V = Function(
+                                        Pack[FirstBracketIndex - 1].VarUP->Val.Area.Area,
+                                        Pack[FirstBracketIndex - 1].VarUP->Val.Area.Size,
+                                        ChildCount.Value,
+                                        ChildCount.ValueSize
+                                        );
+
+                                    MioneObj* NewPack = malloc(0);
+                                    int NewPackSize = 0;
+
+                                    for (int index = 0; index < FirstBracketIndex-1; index++)
+                                    {
+                                        NewPackSize++;
+                                        NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
+                                        NewPack[NewPackSize - 1] = Pack[index];
+                                    }
+
+                                    printf("sizoe of fuc returned : %d\n",V.ValueSize);
+
+                                    if (V.ValueSize)
+                                    {
+                                        for (int index = 0; index < V.ValueSize; index++)
+                                        {
+                                            NewPackSize++;
+                                            NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
+                                            NewPack[NewPackSize - 1] = (MioneObj){
+                                                .ObjType = 5,
+                                                .Val = V.Value[index],
+                                                .Line = Pack[i-1].Line,
+                                                .Column = Pack[i-1].Column
+                                            };
+
+                                        }
+
+                                    }else
+                                    {
+                                        NewPackSize++;
+                                        NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
+                                        NewPack[NewPackSize - 1] = (MioneObj){
+                                            .ObjType = 5,
+                                            .Val = (ValueObj){
+                                            .ValueType = 2,.NPNumber = 0}
+                                        };
+                                    }
 
 
-                                  printf("errr I didnt expect this to happen");
-                                    exit(99);
+                                    for (int index = i+1 ; index < PackSize; index++)
+                                    {
+
+                                        NewPackSize++;
+                                        NewPack = realloc(NewPack, sizeof(MioneObj) * (NewPackSize));
+                                        NewPack[NewPackSize - 1] = Pack[index];
+                                    }
+
+                                    PackSize = NewPackSize;
+                                    Pack = NewPack;
+
+
+                                    i = FirstBracketIndex - 1;
+
+
+
+
+
+                                    FunctionCalled = 1;
                                 }
                                 else
                                 {
@@ -167,7 +228,6 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                                    //todo function call
                                     FunctionCalled = 1;
                                 }
                                 else

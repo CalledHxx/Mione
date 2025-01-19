@@ -45,9 +45,7 @@ HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
 
                 for(int CountedIndex = 0; CountedIndex < Counted.ValueSize; CountedIndex++)
                 {
-                    printf("before %p\n", (void *)&(Request.VariableUPs[CountedIndex]->Val));
                     Request.VariableUPs[CountedIndex]->Val = Counted.Value[CountedIndex];
-                    printf("after %p\n", (void *)&(Request.VariableUPs[CountedIndex]->Val));
 
                 }
             break;

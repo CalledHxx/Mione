@@ -2,4 +2,10 @@ set x =  function
     /* return 2819.0*/
     return 2819.0 + 1
 end
-set y = x(1.0)+1
+
+set y = x()+5
+
+set x = 1.0
+
+set y = x+5
+
