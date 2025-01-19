@@ -62,7 +62,7 @@ typedef struct _ValueObject
 typedef struct _VariableObject
 {
     char* Name; //變數名稱
-    ValueObj V; //值
+    ValueObj Val; //值
 } VariableObj;
 
 typedef struct _SymbolObject
@@ -102,7 +102,7 @@ typedef struct _MioneObject
 {
     int ObjType; //HPSVV宏 1H 2P 3S 4VAR 5VAL 0換行
 
-    VariableObj Var; //當ObjType為VAR時，會用到此變數。
+    VariableObj * VarUP; //當ObjType為VAR時，會用到此變數。
     ValueObj Val;  //當ObjType為VALUE宏時，會用到此值。
     //char* _Text;
 
@@ -172,11 +172,11 @@ typedef struct _HeadReturnObject
 } HeadReturnObj;
 
 
-typedef struct _VariableRequestObject
+typedef struct _VariableRequestUPObject
 {
-    VariableObj * Variables;
+    VariableObj * * VariableUPs;
     int VariablesSize;
-} VariableRequestObj;
+} VariableRequestUPObj;
 
 
 

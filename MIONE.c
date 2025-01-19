@@ -54,8 +54,6 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                 {
                 case 1:
                     return a.Vs;
-                case 2:
-                    index = index - a.Useless; //-1+1
                 }
 
                 if (Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0)continue;
@@ -127,10 +125,6 @@ ValueReturnObj Function(const MioneObj* Objs, const int ObjsSize,const ValueObj*
                 {
                 case 1:
                     return a.Vs;
-
-                case 2:
-                    index = index - a.Useless; //-1+1
-                    break;
                 }
             }
         }
@@ -182,8 +176,6 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
                 {
                 case 1:
                     return a.Vs;
-                case 2:
-                    index = index - a.Useless; //-1+1
                 }
 
                 if (Mio.ObjType == 3 && strcmp(Mio.Symbol.Name, ";") == 0)continue;
@@ -238,6 +230,8 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
             (Pairs[PairsSize - 1].Source) = realloc(Pairs[PairsSize - 1].Source, sizeof(MioneObj) * (Pairs[PairsSize - 1].SourceSize));
             Pairs[PairsSize - 1].Source[Pairs[PairsSize - 1].SourceSize - 1] = Mio;
 
+
+
         }
 
         if (ObjsSize - 1 == index)
@@ -254,10 +248,6 @@ ValueReturnObj mione(const MioneObj* Objs, const int ObjsSize)
                 {
                 case 1:
                     return a.Vs;
-
-                case 2:
-                    index = index - a.Useless; //-1+1
-                    break;
                 }
             }
         }

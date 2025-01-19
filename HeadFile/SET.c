@@ -11,17 +11,17 @@
 #include "../ERR.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
 {
     HeadReturnObj ToReturn;
     ToReturn.ToState = 0;
 
-
     //set x
     //1   2
 
-    VariableRequestObj Request = {.VariablesSize = 0};
+    VariableRequestUPObj Request = {.VariablesSize = 0};
     CountObj Counted = {.ValueSize = 0};
 
     for (int i = 0; i < PairsSize; i++)
@@ -35,21 +35,29 @@ HeadReturnObj SET(struct _PairObject*Pairs,int PairsSize)
         }
         if (Prompt.ObjType == 2)
         {
-            Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
-
-            if (Counted.ValueSize>Request.VariablesSize) ErrCall("More variables than values","M111",NULL,Prompt.Line,Prompt.Column);
-
-
-            for(int CountedIndex = 0; CountedIndex < Counted.ValueSize; CountedIndex++)
+            switch (Prompt.Prompt.CurNumber)
             {
-                Request.Variables[CountedIndex].V =  Counted.Value[CountedIndex];
+            case 1:
+
+                Counted = COUNT(Pairs[i].Source, Pairs[i].SourceSize);
+
+                if (Counted.ValueSize>Request.VariablesSize) ErrCall("More variables than values","M111",NULL,Prompt.Line,Prompt.Column);
+
+                for(int CountedIndex = 0; CountedIndex < Counted.ValueSize; CountedIndex++)
+                {
+                    printf("before %p\n", (void *)&(Request.VariableUPs[CountedIndex]->Val));
+                    Request.VariableUPs[CountedIndex]->Val = Counted.Value[CountedIndex];
+                    printf("after %p\n", (void *)&(Request.VariableUPs[CountedIndex]->Val));
+
+                }
+            break;
+
+            default:
+                ErrCall("unsupported prompt type","M111",NULL,Prompt.Line,Prompt.Column);
+                break;
             }
         }
     }
-
-
-
-
 
     return ToReturn;
 }

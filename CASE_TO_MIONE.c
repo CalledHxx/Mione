@@ -35,7 +35,7 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
     int goEndType = 0; //range or function or lights
 
-    VariableObj* Vars = malloc(0);
+    VariableObj* * VarsUP = malloc(0);
     int VarsSize = 0;
 
     CaseObj* Area = malloc(0);
@@ -95,15 +95,13 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
              if (strcmp(CASES[i].ObjName,Prompts[Ci].Name) == 0)
              {
-                 PromptObj Prompt = (PromptObj){
-                     .Name = CASES[i].ObjName,
-                 };
+
                  Column++;
                  (MIONESIZE)++;
                  (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
                  (MIONE)[(MIONESIZE)-1] = (MioneObj){
                      .ObjType= 2,
-                     .Prompt = Prompt,
+                     .Prompt = Prompts[Ci],
                       .Line = Line,
                      .Column = Column
                  };
@@ -300,46 +298,62 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
             int NewVar = 1;
 
-            VariableObj Variable;
+            VariableObj* VariableUP = malloc(sizeof (VariableObj));
 
-            for (int j = 0; j < VarsSize; j++)   if (Vars[j].Name == CASES[i].ObjName)
+
+            for (int j = 0; j < VarsSize; j++)   if (strcmp(VarsUP[j]->Name ,CASES[i].ObjName)==0)
             {
-
                 NewVar = 0;
+                VariableUP = VarsUP[j];
 
-                Variable = Vars[i];
+
 
                 break;
             }
 
             if (NewVar)
             {
-                Variable = (VariableObj){
+                *VariableUP = (VariableObj){
                     .Name = CASES[i].ObjName,
                 };
 
+
+
+                VariableObj * VUP = malloc(sizeof(VariableObj));
+                VUP = VariableUP;
+
                 VarsSize++;
-                Vars = realloc(Vars,VarsSize*sizeof(VariableObj));
-                Vars[VarsSize-1] = Variable;
+                VarsUP = realloc(VarsUP,VarsSize*sizeof(VariableObj*));
+                VarsUP[VarsSize-1] = VUP;
+
+
             }
 
              Column++;
+
+
 
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
             (MIONE)[(MIONESIZE)-1] = (MioneObj){
                 .ObjType = 4,
-                .Var = Variable,
+                .VarUP = VariableUP,
                 .Line = Line,
                  .Column = Column
             };
+
         };
 
+
+           /*
         if (!ChildCount) //一班執行的子項內容
         {
         }
+        */
        }
     }
+
+
 
     (*SIZE) = (MIONESIZE);
     return MIONE;

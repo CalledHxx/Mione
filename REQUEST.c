@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-VariableRequestObj REQUEST(MioneObj* PACK,int PACKSize){
-  VariableRequestObj VarReq;
-  VarReq.Variables = malloc(0);
+VariableRequestUPObj REQUEST(MioneObj* PACK,int PACKSize){
+  VariableRequestUPObj VarReq;
+  VarReq.VariableUPs = malloc(0);
   VarReq.VariablesSize = 0;
 
   for (int PACKIndex = 0; PACKIndex < PACKSize;PACKIndex++) {
@@ -24,12 +24,15 @@ VariableRequestObj REQUEST(MioneObj* PACK,int PACKSize){
         }
         break;
       case 4:
+
+       
+
         VarReq.VariablesSize++;
-        VarReq.Variables = realloc(VarReq.Variables,VarReq.VariablesSize*sizeof(VariableObj));
-        VarReq.Variables[VarReq.VariablesSize-1] = PACK[PACKIndex].Var;
+        VarReq.VariableUPs = realloc(VarReq.VariableUPs,VarReq.VariablesSize*sizeof(VariableObj*));
+        VarReq.VariableUPs[VarReq.VariablesSize-1] = PACK[PACKIndex].VarUP;
+
 
       printf("added a\n");
-
 
         break;
       default:

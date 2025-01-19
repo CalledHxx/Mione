@@ -65,7 +65,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             if (Pack[FirstBracketIndex - 1].ObjType == 4)
                             {
 
-                                if (Pack[FirstBracketIndex - 1].Var.V.ValueType == 4)
+                                if (Pack[FirstBracketIndex - 1].VarUP->Val.ValueType == 4)
                                 {
 
 
@@ -74,9 +74,10 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                                 }
                                 else
                                 {
+
                                     char *str1 = "The Type of `";
                                     char *str2 = "` isn't a FUNCTION";
-                                    char *VName = Pack[FirstBracketIndex - 1].Var.Name;
+                                    char *VName = Pack[FirstBracketIndex - 1].VarUP->Name;
 
                                     char *REASON = malloc(sizeof(char) * (int)(strlen(str1) + strlen(str2) + strlen(VName) + 1));
                                     strcpy(REASON, str1);
@@ -321,8 +322,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
-                            if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
+                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].VarUP->Val; else Target1 = Pack[i - 2].Val;
+                            if (Pack[i].ObjType == 4) Target2 = Pack[i].VarUP->Val; else Target2 = Pack[i].Val;
 
 
 
@@ -425,8 +426,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
                             ValueObj Target1 ;
                             ValueObj Target2 ;
 
-                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
-                            if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
+                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].VarUP->Val; else Target1 = Pack[i - 2].Val;
+                            if (Pack[i].ObjType == 4) Target2 = Pack[i].VarUP->Val; else Target2 = Pack[i].Val;
 
                             if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 1","MG0011113","",
                                 Pack[i-2].Line,
@@ -518,8 +519,8 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].Var.V; else Target1 = Pack[i - 2].Val;
-                            if (Pack[i].ObjType == 4) Target2 = Pack[i].Var.V; else Target2 = Pack[i].Val;
+                            if (Pack[i - 2].ObjType == 4) Target1 = Pack[i - 2].VarUP->Val; else Target1 = Pack[i - 2].Val;
+                            if (Pack[i].ObjType == 4) Target2 = Pack[i].VarUP->Val; else Target2 = Pack[i].Val;
 
                         if (!(Target1.ValueType == 2 || Target1.ValueType == 3)) ErrCall("Type Error 3","MG0011116","",
                             Pack[i-2].Line,
@@ -592,7 +593,7 @@ CountObj COUNT(MioneObj*Pack,int PackSize)
 
 
 
-                        if (Pack[i].ObjType == 4) Target = Pack[i].Var.V;
+                        if (Pack[i].ObjType == 4) Target = Pack[i].VarUP->Val;
                         if (Pack[i].ObjType == 5) Target = Pack[i].Val;
 
                         if (Target.ValueType == 3) UsePointNumber = 1;
