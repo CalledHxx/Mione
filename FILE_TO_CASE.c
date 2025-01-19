@@ -418,10 +418,6 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                         .ObjType = 3,
                         .ObjName = CASE,
                     };
-
-
-
-
                    // printf("*[CASE END]* \n");
 
                     inLockinType = 0;
@@ -434,6 +430,43 @@ CaseObj* FCO(FILE* F,int*CASESIZE)
                 {
                     inLockinType = 1;
                 }
+
+                break;
+                case 4:
+
+        if (inLockinType == 1)
+        {
+            CASESize++;
+            CASE = realloc(CASE, CASESize);
+            CASE[CASESize - 1] = c;
+
+            //printf("huh %d\n",c);
+
+            CASESize++;
+            CASE = realloc(CASE, CASESize);
+            CASE[CASESize - 1] = 0;
+            //printf("my track~ '%s'\n", CASE);
+
+
+
+            CaseObjectsSize++;
+            CaseObjects = realloc(CaseObjects, CaseObjectsSize*sizeof(CaseObj));
+            CaseObjects[CaseObjectsSize - 1] = (CaseObj){
+                .ObjType = 3,
+                .ObjName = CASE,
+            };
+            // printf("*[CASE END]* \n");
+
+            inLockinType = 0;
+
+            CASE = NULL;
+            CASE = malloc(0);
+            CASESize = 0;
+        }
+        else if (inLockinType == 0)
+        {
+            inLockinType = 1;
+        }
 
                 break;
             case 9:

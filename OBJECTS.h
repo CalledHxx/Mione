@@ -51,12 +51,14 @@ typedef struct _ValueObject
     5:執行式
     6:表單
     7:開關
+    8:布林值
     */
-    struct _AreaObject Area; //給於函數(function)或者執行式(range)。
+    struct _AreaObject Area; //給於函數(function),開關(lights)或者執行式(range)。
     char * String; //給予文字(string)。
     long int NPNumber; //給予無小數點數字(no point number)。
     long double PNumber; //給予小數點數字(point number)。
     struct _TableObject Table; //給予表格(table)。
+    int db;//布林
 } ValueObj;
 
 typedef struct _VariableObject
@@ -70,7 +72,7 @@ typedef struct _SymbolObject
     char * Name;
     int SymbolType;
     int CurNumber;
-    int CanConnect;
+    int CanConnect; //即本體是否可與前面符號相連
 
     int xIndex;
     int yIndex;

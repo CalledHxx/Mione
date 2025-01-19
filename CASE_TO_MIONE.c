@@ -134,11 +134,19 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
         }
 
         //Value : String
-         if (ChildCount == 0) if (CASES[i].ObjType == 3)
+         if (ChildCount == 0) if (CASES[i].ObjType == 3|| CASES[i].ObjType == 4)
         {
 
             Paired = 5;
-            ValueObj Value = (ValueObj){.ValueType = 1, .String = CASES[i].ObjName};
+             char*str=malloc(0);
+
+             for (int s = 1; s<strlen(CASES[i].ObjName); s++)
+             {
+                 str=realloc(str,s+1);
+                 str[s-1] = s == strlen(CASES[i].ObjName)-1 ? '\0' :  CASES[i].ObjName[s];
+             }
+
+            ValueObj Value = (ValueObj){.ValueType = 1, .String = str};
              Column++;
 
             (MIONESIZE)++;
@@ -150,9 +158,8 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                 .Column = Column
             };
 
+
         }
-
-
 
            //Value : lights,function or range END 
            if (strcmp(CASES[i].ObjName,"end") == 0)
@@ -172,8 +179,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                        .Size = MioObjSize,
                        .Index = MIONESIZE,
                    };
-
-
 
                    ValueObj Value = (ValueObj){
                        .ValueType = goEndType == 1 ? 5 : (goEndType == 2 ? 4 : 7),
@@ -195,10 +200,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    Area = NULL;
                    Area = malloc(0);
                    AreaSize = 0;
-
-
-
-
                }else
                {
                    AreaSize++;
@@ -212,12 +213,8 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    AreaSize++;
                    Area = realloc(Area,AreaSize*sizeof(CaseObj));
                    Area[AreaSize-1] = CASES[i];
-
-
                }
-
            }
-
            //Value : Function
            if (strcmp(CASES[i].ObjName,"function") == 0)
            {
@@ -258,14 +255,41 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                }
            }
 
+           if (strcmp(CASES[i].ObjName,"true") == 0)
+           {
+               Paired = 5;
+               ValueObj Value = (ValueObj){.ValueType = 8, .db = 1};
+               Column++;
 
+               (MIONESIZE)++;
+               (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
+               (MIONE)[(MIONESIZE)-1] = (MioneObj){
+                   .ObjType= 5,
+                   .Val = Value,
+                   .Line = Line,
+                   .Column = Column
+               };
+           }
+           if (strcmp(CASES[i].ObjName,"false") == 0)
+           {
+               Paired = 5;
+               ValueObj Value = (ValueObj){.ValueType = 8, .db = 0};
+               Column++;
 
+               (MIONESIZE)++;
+               (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
+               (MIONE)[(MIONESIZE)-1] = (MioneObj){
+                   .ObjType= 5,
+                   .Val = Value,
+                   .Line = Line,
+                   .Column = Column
+               };
+           }
 
         //Value : NPNumber
             if (ChildCount == 0) if(CASES[i].ObjType == 2)
            {
                Paired = 5;
-
 
                long int V = 0;
                V=V+atoi(CASES[i].ObjName);
@@ -276,7 +300,6 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                };
                 Column++;
 
-
                (MIONESIZE)++;
                (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
                (MIONE)[(MIONESIZE)-1] = (MioneObj){
@@ -285,13 +308,8 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                    .Line = Line,
                    .Column = Column
                };
-
            }
-
         //Variable
-
-
-
          if (ChildCount == 0) if (Paired == 0 && (CASES[i].ObjType != 13))
         {
             Paired = 4;
@@ -300,14 +318,10 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
 
             VariableObj* VariableUP = malloc(sizeof (VariableObj));
 
-
             for (int j = 0; j < VarsSize; j++)   if (strcmp(VarsUP[j]->Name ,CASES[i].ObjName)==0)
             {
                 NewVar = 0;
                 VariableUP = VarsUP[j];
-
-
-
                 break;
             }
 
@@ -317,21 +331,14 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                     .Name = CASES[i].ObjName,
                 };
 
-
-
                 VariableObj * VUP = malloc(sizeof(VariableObj));
                 VUP = VariableUP;
 
                 VarsSize++;
                 VarsUP = realloc(VarsUP,VarsSize*sizeof(VariableObj*));
                 VarsUP[VarsSize-1] = VUP;
-
-
             }
-
              Column++;
-
-
 
             (MIONESIZE)++;
             (MIONE) = (MioneObj*)realloc( (MIONE) ,(MIONESIZE)*sizeof(MioneObj));
@@ -341,19 +348,9 @@ MioneObj *CMO(CaseObj*CASES,int CASESIZE,
                 .Line = Line,
                  .Column = Column
             };
-
         };
-
-
-           /*
-        if (!ChildCount) //一班執行的子項內容
-        {
-        }
-        */
        }
     }
-
-
 
     (*SIZE) = (MIONESIZE);
     return MIONE;

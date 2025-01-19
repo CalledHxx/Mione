@@ -85,6 +85,13 @@ SymbolObj Symbols[] =
         .CurNumber = 7,
         .CanConnect = 1
     },
+    (SymbolObj){
+        .Name = "==",
+        .SymbolType = 2,
+        .xIndex = 2,
+        .CurNumber = 8,
+        .CanConnect = 1
+    },
 
     (SymbolObj){ //衛兵值
         .CurNumber = -1
